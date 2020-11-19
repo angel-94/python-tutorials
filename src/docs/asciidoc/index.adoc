@@ -1,4 +1,4 @@
-= AML Meltsan
+= Python
 // Documentación detallada de reglas
 // {buildDate}
 // :toclevels: 4
@@ -12,9 +12,9 @@
 // ifdef::backend-pdf[:imagesdir: images]
 // :title-logo-image: image:logo.png[]
 
-AML es un sistema de prevención y detección de lavado de dinero el cual cuenta con los siguientes modulos
+TIP: My first Python Tuetorial, if you find a error or you have a suggestion to improve this documentation feel free to open a issue or clone this repository and send me a Pull Reqquest with your change
 
 [horizontal]
-<<01-version-control.adoc#control-version, Control de versiones>> :: Control de cambios realizados en el ducumentación
-<<03-rules.adoc#rule, Reglas AML>> :: Códigos SQL de las reglas de AML
-<<01-version-control.adoc#control-version, Manual de usuario>> :: Manual de Usuario
+<<python.adoc#python, What is Python?>> :: A short definitions of what is Python
+<<venv.adoc#venv, How to create a venv?>> :: You find steps to create a virtual environment
+
