@@ -168,7 +168,7 @@ asciidoctor {
 	sources {
 		include '*.adoc'
 	}
-	outputDir "$buildDir/docs/ref-docs/html5"
+	outputDir "$buildDir/docs/html5"
 	logDocuments = true
 	resources {
 		from(sourceDir) {
@@ -182,7 +182,7 @@ gitPublish {
     repoUri = gitHubRepoUri
     branch = pagesBranch
 
-    repoDir = file("$buildDir/docs")
+    repoDir = file("$buildDir/docs/html5")
 
     contents {
         from "$buildDirectory"
