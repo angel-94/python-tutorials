@@ -1,16 +1,16 @@
 ifndef::imagesdir[:imagesdir: images]
 = Venv
 
-==  But what is a venv?
+==  What is a venv?
 
 A venv is a virtual environmet to work with python
 
 == Steps to create a venv
 
-- For create a vevn and start to work withe python, open a terminal and in your personal workspace create a directory, for example, for me I create a directory in the folowing path.
+- For create a vevn and start to work with *Python*, open a terminal and in your personal workspace create a directory, for example, I create a directory in the folowing path.
         * `~/Documents/Workspaces/personal-workspace/hello-world`
 
-- Now inside this direcory we should create another directory, the name of this directory is of your choise, for me is:
+- Now inside this directory we need to create a sub-directory, the name of this sub-directory is of your choise, I chose this name:
         * `venv`
 
 - Now execute the next command:
@@ -18,7 +18,7 @@ A venv is a virtual environmet to work with python
                 . **python3:** The version of the language
                 . **-m:** Indicates we run a library module as a script 
                 . **venv:** Name of the module
-                . **~/Documents/Workspaces/personal-workspace/hello-world/venv:** The path of your system wwhere you create the Virtual Environment
+                . **~/Documents/Workspaces/personal-workspace/hello-world/venv:** The path of your system wwhere you create the *Virtual Environment*
 
 - Now run the next command
         * `source ~/Documents/Workspaces/personal-workspace/hello-world/venv/bin/activate`

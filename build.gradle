@@ -182,7 +182,7 @@ gitPublish {
     repoUri = gitHubRepoUri
     branch = pagesBranch
 
-    repoDir = file("$buildDir/docs/html5")
+    repoDir = file("$buildDir/docs-tmp/html5")
 
     contents {
         from "$buildDir/docs/html5"
