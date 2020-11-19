@@ -1,0 +1,41 @@
+[%header,cols="1,4,1,1,4"] 
+|===
+
+|Id
+|Parámetro
+|Condición
+|Valor
+|Descripción
+
+|1
+|NÚMERO DE OPERACIONES
+|
+|30
+|
+
+
+|3 
+|MONTO USD
+|
+|100001
+|
+
+|3 
+| TIPO DE PERSONA
+|
+|100001
+|
+
+|4
+|TIPO DE OPERACIÓN^(Nuevo)^
+|
+|CATÁLOGO
+|
+
+|4
+|NUM_DIAS_ANALISIS ^**Nuevo**^
+|
+|CATÁLOGO
+|
+
+|===

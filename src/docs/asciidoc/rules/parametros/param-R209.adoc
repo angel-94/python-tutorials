@@ -1,0 +1,80 @@
+[%header,cols="1,4,1,1,4"] 
+|===
+
+|Id
+|Parámetro
+|Condición
+|Valor
+|Descripción
+
+|1
+|NÚMERO DE DÍAS NATURALES
+|
+|30
+|
+
+|2
+|NÚMERO MÍNIMO DE TRANSACCIONES
+|
+|5
+|
+
+|3
+|PORCENTAJE DE DESVIACIÓN
+|
+|2
+|
+
+|4
+|DÍA ANALIZAR
+|
+|ANTERIOR
+|
+
+
+|===
+
+
+[source,java,linenums,options="nowrap"]
+[subs="verbatim,quotes"]
+----
+public int execute(String cierreId, String procesoId, UserVO user) {
+		List<DatosVo> casos = new ArrayList<DatosVo>();
+		try {
+		List<ValuesRules> valuesRule = utilsRulesDao.getValuesRule(RELEVANTES.OPERACIONES_FRACCIONADAS.getNumRn(), user);
+		String montoPesos = utilsRulesDao.getValueFromParam(valuesRule, 1);
+		String dias = utilsRulesDao.getValueFromParam(valuesRule, 2);
+		String montoDls = utilsRulesDao.getValueFromParam(valuesRule, 5);
+		String numRegla = RELEVANTES.OPERACIONES_FRACCIONADAS.getNumRn();
+		
+		
+		LOG.info("Dentro de RelevanteDaoImpl ejecutando la regla 37");
+		LOG.info("ValuesRule "+ valuesRule + " ******");
+		LOG.info("cierreId "+ cierreId);
+		LOG.info("dias " + Integer.parseInt(dias));
+		LOG.info("montoDls "+ montoDls);
+		LOG.info("procesoId "+ procesoId);		
+		LOG.info("reglaid " + numRegla);
+		
+		casos = this.jdbcTemplate.query
+				(setSchema(user.getEsquema(), qryFraccionadas),
+						new Object[]{
+							cierreId,
+							Integer.parseInt(dias),
+							montoDls,
+							procesoId,
+							RELEVANTES.OPERACIONES_FRACCIONADAS.getNumRn()						
+				},CasosMapper.casosMapper);
+
+		utilsRulesDao.instValorParametrosRn(cierreId, RELEVANTES.OPERACIONES_FRACCIONADAS.getNumRn(), valuesRule,user);
+
+		LOG.info("Numero de casos devueltos del Mapper "+ casos.size());
+		utilsRulesDao.persisteCasos(casos, valuesRule, cierreId, REGLAS.INUSUAL.getTipoRegla(),
+				REGLAS.INUSUAL.getTipoAnalisis(),RELEVANTES.OPERACIONES_FRACCIONADAS.getNumRn(),user);
+		}catch(Exception e) {
+			System.out.println("ERROR EN CASOS RuleFraccionadaDaoImpl");
+			e.printStackTrace();
+		}
+		return casos.size();
+	}
+----

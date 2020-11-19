@@ -1,0 +1,20 @@
+= AML Meltsan
+// Documentación detallada de reglas
+// {buildDate}
+// :toclevels: 4
+// :toc-title: Tabla de Contenido
+// :revnumber: {project-version}
+// ifndef::imagesdir[:imagesdir: images]
+// ifndef::sourcedir[:sourcedir: ../java]
+// ifndef::queriesdir[:queriesdir: queries/]
+// ifndef::qryutilsdir[:qryutilsdir: qry-utils/]
+// ifndef::params[:params: parametros/]
+// ifdef::backend-pdf[:imagesdir: images]
+// :title-logo-image: image:logo.png[]
+
+AML es un sistema de prevención y detección de lavado de dinero el cual cuenta con los siguientes modulos
+
+[horizontal]
+<<01-version-control.adoc#control-version, Control de versiones>> :: Control de cambios realizados en el ducumentación
+<<03-rules.adoc#rule, Reglas AML>> :: Códigos SQL de las reglas de AML
+<<01-version-control.adoc#control-version, Manual de usuario>> :: Manual de Usuario

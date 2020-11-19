@@ -1,0 +1,16 @@
+.gradle/
+.classpath
+.project
+.settings/
+*.iml
+*.ipr
+*.iws
+.gradletasknamecache
+build/
+
+.idea/
+.vscode/
+
+.DS_Store
+
+*.classpath*

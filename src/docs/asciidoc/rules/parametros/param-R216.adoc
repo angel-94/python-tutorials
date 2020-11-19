@@ -1,0 +1,36 @@
+[%header,cols="1,4,1,1,4"] 
+|===
+
+|Id
+|Parámetro
+|Condición
+|Valor
+|Descripción
+
+|1
+|NÚMERO DE DÍAS NATURALES
+|
+|30
+|
+
+|2
+|NÚMERO MÍNIMO DE TRANSACCIONES
+|
+|5
+|
+
+|3
+|PORCENTAJE DE DESVIACIÓN
+|
+|2
+|
+
+|4
+|DÍA ANALIZAR
+|
+|ANTERIOR
+|
+
+
+|===
+

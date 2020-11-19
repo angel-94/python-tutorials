@@ -1,0 +1,328 @@
+plugins {
+    id "org.asciidoctor.jvm.convert" version "3.2.0"
+    id "org.asciidoctor.jvm.epub" version "3.2.0"
+    id "org.asciidoctor.jvm.pdf" version "3.2.0"
+    id 'org.asciidoctor.jvm.gems' version '3.2.0'
+    id 'com.bmuschko.docker-remote-api' version '6.4.0'
+    id "org.ajoberstar.git-publish" version "2.1.3"
+    id 'org.ajoberstar.grgit' version '4.0.1'
+    id 'java'
+    id 'idea'
+}
+
+ext {
+        registryUsername = 'angel'
+        registryHost = 'docker.hub'
+        dockerGroup = 'docker'
+        set('snippetsDir', file("build/generated-snippets"))
+}
+
+import com.bmuschko.gradle.docker.tasks.container.*
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.Dockerfile
+
+configurations {
+	asciidoctorExt
+}
+
+allprojects {
+  group = 'org.meltsan'
+  defaultTasks 'check'
+}
+
+repositories {
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
+    maven {
+		url "https://repo.spring.io/release"
+		mavenContent {
+			includeGroup "io.spring.asciidoctor"
+		}
+	}
+    jcenter()
+    // ruby.gems()
+}
+
+dependencies {
+    implementation 'org.asciidoctor:asciidoctorj:2.3.0'
+    implementation 'org.asciidoctor:asciidoctorj-diagram:2.0.2'
+    asciidoctorExt("io.spring.asciidoctor:spring-asciidoctor-extensions-block-switch:0.4.3.RELEASE")
+    // asciidoctorGems 'rubygems:pygments:1.2.1'
+}
+
+import java.text.SimpleDateFormat
+
+def buildDirectory = "$buildDir/asciidoc/docs"
+def sourceDirectory = "src/docs/asciidoc"
+
+
+pdfThemes {
+   local 'mts-theme.yml', {
+       print("themes/meltsan")
+       themeDir = file("$sourceDirectory/themes/meltsan")
+       themeName = 'mts-theme.yml'
+   }
+}
+
+
+asciidoctorPdf {
+    theme = 'mts-theme.yml'
+    logDocuments true
+    baseDirFollowsSourceDir()
+    sourceDir file(sourceDirectory)
+    outputDir file(buildDirectory)
+
+    asciidoctorj {
+        attributes 'source-highlighter': 'rouge'
+    }
+
+    attributes 'build-gradle': file('build.gradle'),
+            'endpoint-url': 'https://meltsan.us',
+            'source-highlighter': 'rouge',
+            'toc': 'right',
+            'doctype': 'book',
+            'icons': 'font',
+            'setanchors': '',
+            'idprefix': '',
+            'idseparator': '-',
+            'docinfo1': '',
+            'allow-uri-read': true,
+            'listing-caption': 'Listing',
+            'sectnums': '',
+            'toclevels': '5',
+            'toc-title': 'Contenido',
+            'chapter-label': '',
+            'pdf-fontsdir': 'fonts',
+            'sourcedir': project.sourceSets.main.java.srcDirs[0],
+            'outdir': outputDir.absolutePath,
+            'buildDate': new SimpleDateFormat("dd-MMMM-yyyy HH:mm:ss").format(new Date()),
+            'buildTitle': 'Aml Reglas Docs',
+            'buildSubtitle': 'Aml Reglas Docs',
+            'project-version': "$version"
+}
+
+
+// asciidoctor {
+//     baseDirFollowsSourceDir()
+//     sourceDir file(sourceDirectory)
+//     outputDir file(buildDirectory)
+//     logDocuments true
+
+//     asciidoctorj {
+// //        requires 'pygments'
+//         attributes 'source-highlighter' : 'rouge'
+//     }
+
+//     attributes 'build-gradle': file('build.gradle'),
+//             'endpoint-url': 'https://meltsan.us',
+//             'source-highlighter': 'rouge',
+//             'toc': 'left',
+//             'icons': 'font',
+// 			'doctype': 'book',
+//             'setanchors': '',
+//             'idprefix': '',
+//             'idseparator': '-',
+//             'docinfo1': '',
+//             'numbered': '',
+//             'allow-uri-read': true,
+//             'sourcedir': project.sourceSets.main.java.srcDirs[0],
+//             'outdir': outputDir.absolutePath,
+//             'buildDate': new SimpleDateFormat("dd-MMMM-yyyy HH:mm:ss").format(new Date()),
+//             'buildTitle': 'Aml Reglas Docs',
+//             'buildSubtitle': 'Aml Reglas Docs',
+//             'project-version': "$version"
+// }
+
+asciidoctorj {
+	version = '2.4.1'
+	fatalWarnings ".*"
+	options doctype: 'book',eruby : 'erubis'
+    modules {
+        diagram.version '2.0.0'
+    }
+	attributes([
+			icons: 'font',
+			idprefix: '',
+			idseparator: '-',
+			docinfo: 'shared',
+			revnumber: project.version,
+			sectanchors: '',
+			sectnums: '',
+			'source-highlighter': 'highlight.js',
+			highlightjsdir: 'js/highlight',
+			'highlightjs-theme': 'googlecode',
+			stylesdir: 'css/',
+			stylesheet: 'stylesheet.css',
+			'spring-version': project.version
+	])
+}
+
+/**
+ * Generate the Spring Framework Reference documentation from "src/docs/asciidoc"
+ * in "build/docs/ref-docs/html5".
+ */
+asciidoctor {
+	baseDirFollowsSourceDir()
+    configurations 'asciidoctorExt'
+	sources {
+		include '*.adoc'
+	}
+	outputDir "$buildDir/docs/ref-docs/html5"
+	logDocuments = true
+	resources {
+		from(sourceDir) {
+			include 'images/*.png', 'css/**', 'js/**'
+		}
+	}
+}
+
+
+gitPublish {
+    repoUri = gitHubRepoUri
+    branch = pagesBranch
+
+    repoDir = file("$buildDir/docs")
+
+    contents {
+        from "$buildDirectory"
+        into "."
+    }
+
+    commitMessage = "Publish documentation for ${project.group}:${project.name}:$version"
+}
+
+gitPublishPush.dependsOn asciidoctor
+// gitPublishPush.shouldRunAfter clean, asciidoctor, build
+task renderAll(dependsOn: [asciidoctor, asciidoctorPdf])
+
+
+def FROM = 'nginx:1.16.0'
+def PORT = 80
+def MAINTAINER = 'Meltsan Solutions - manuel.ruiz@meltsan.com'
+def NAME = 'aml-docs'
+def SEPARATOR_GCP = '/'
+
+task inspectContainer(type: DockerInspectContainer) {
+    group dockerGroup
+    println("Inspect containeter -> $mtsContainerId")
+    containerId.set(mtsContainerId)
+    onError { exception ->
+        if (exception.message != null && !exception.message.contains('No such container'))
+            throw exception
+        logger.quiet "No se pudo inspeccionar el contenedor!."
+    }
+}
+
+task createDockerfile(type: Dockerfile) {
+
+    def env = (System.getenv('BUILD_ENVIRONENT') ?: (project.hasProperty('environment') ? environment : '')) ?: ''
+    def environmentVar = env.toLowerCase()
+    println('Build Dockerfile with environment ' + environmentVar)
+    destFile.set(project.file('Dockerfile'))
+    from "$FROM_BUILDER"
+    label(['maintainer': "$MAINTAINER"])
+    instruction 'WORKDIR /aml-docs'
+    instruction 'ENV PATH /aml-docs/node_modules/.bin:$PATH'
+    instruction 'COPY . /aml-docs'
+    instruction 'RUN yarn install'
+    instruction 'RUN yarn global add flow-typed'
+    instruction 'WORKDIR /aml-docs/app'
+    instruction 'RUN yarn install'
+    instruction "RUN yarn build:$environmentVar"
+    instruction "FROM $FROM"
+    instruction 'COPY --from=build /build /usr/share/nginx/html'
+    instruction 'COPY default.conf /etc/nginx/conf.d'
+    instruction "EXPOSE $PORT"
+    entryPoint("nginx", "-g", "daemon off;")
+
+}
+
+task stopContainer(type: DockerStopContainer) {
+    group dockerGroup
+    dependsOn inspectContainer
+    containerId.set(mtsContainerId)
+    onError { exception ->
+        if (exception.message != null) {
+            if (!exception.message.contains('No such container')) {
+                throw exception
+            } else {
+                logger.quiet "No existe el contenedor con el ID: '${containerId.get()}'."
+            }
+        }
+    }
+}
+
+task removeContainer(type: DockerRemoveContainer) {
+    println("Removing container")
+    group dockerGroup
+    dependsOn stopContainer
+    removeVolumes.set(true)
+    force.set(true)
+    containerId.set(mtsContainerId)
+    onError { exception ->
+        if (exception.message != null && !exception.message.contains('No such container'))
+            throw exception
+    }
+}
+
+task buildImage(type: DockerBuildImage) {
+    println("CREATE IMAGE ...")
+    println("Path --> " + project.projectDir)
+    inputDir.set(project.projectDir)
+    dependsOn createDockerfile, removeContainer
+
+    def repositoryName = project.name.replace(' ', '').toLowerCase()
+    def registryOwner = (System.getenv('USERNAME_WT') ?: (project.hasProperty('registryUsername') ? registryUsername : '')) ?: ''
+    println("registry owner env --> ${System.getenv('USERNAME_WT')}")
+    println("registry owner --> ${registryOwner}")
+    if (!registryOwner) {
+        throw new RuntimeException('Se debe espeficar la siguiente variable de ambiente: USERNAME_WT')
+    }
+    def registryHost = (System.getenv('REGISTRY_HOST') ?: (project.hasProperty('registryHost') ? registryHost : '')) ?: ''
+    println("registry host env --> ${System.getenv('REGISTRY_HOST')}")
+    println("registry host --> ${registryHost}")
+    if (registryHost) {
+        registryHost = registryHost + "${SEPARATOR_GCP}"
+    }
+
+    def tagVersion = project.version
+    def buildNumber = System.getenv('BUILD_NUMBER')
+    if (buildNumber) {
+        tagVersion += ".build_${buildNumber}"
+    }
+
+    def tag = "${registryHost}${registryOwner}/${repositoryName}:${tagVersion}".toLowerCase()
+    println("TAG ---> ${tag}")
+    images.add(tag)
+}
+
+task createContainer(type: DockerCreateContainer) {
+    println("Create container with name $mtsContainerId")
+    group dockerGroup
+    containerName.set(mtsContainerId)
+    targetImageId(buildImage.getImageId())
+    dependsOn buildImage
+    hostConfig.memory.set(new Long('3221225472'))
+    hostConfig.portBindings.set(["${PORT}:${PORT}"])
+    hostConfig.autoRemove.set(true)
+    containerName.set("$NAME")
+}
+
+task startContainer(type: DockerStartContainer) {
+    println("Starting container ...")
+    group dockerGroup
+    dependsOn createContainer
+    containerId.set(createContainer.getContainerId())
+}
+
+task pushImage(type: at.phatbl.shellexec.ShellExec) {
+    def tag = buildImage.images.get()[0]
+    println("Push image with tag -> " + { tag })
+    command "docker push ${tag}"
+}
+
+task removeImage(type: at.phatbl.shellexec.ShellExec) {
+    def tag = buildImage.images.get()[0]
+    command "docker rmi ${tag}"
+}

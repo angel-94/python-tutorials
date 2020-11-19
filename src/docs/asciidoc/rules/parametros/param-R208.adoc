@@ -1,0 +1,74 @@
+[%header,cols="1,4,1,1,4"] 
+|===
+
+|Id
+|Parámetro
+|Condición
+|Valor
+|Descripción
+
+|1
+|INSTRUMENTO MONETARIO
+|
+|3
+|
+
+|2
+|TIPO DE OPERACIÓN
+|
+|CATÁLOGOADO 
+|
+
+|3
+|MONTO TRANSACCIONES
+|
+|500
+|
+
+// |4
+// |DÍA ANALIZAR
+// |
+// |ANTERIOR
+// |
+
+
+|===
+
+
+
+[source,java,linenums,options="nowrap"]
+[subs="verbatim,quotes"]
+----
+public int execute(String cierreId, String procesoId, UserVO user) {
+		List<ValuesRules> valuesRule = utilsRulesDao.getValuesRule(RELEVANTES.OPERACIONES_RELEVANTES.getNumRn(),user);
+		String monto = utilsRulesDao.getValueFromParam(valuesRule, 3);
+		int instMonetario = 1;
+		String numRegla = RELEVANTES.OPERACIONES_RELEVANTES.getNumRn();
+		LOG.info("Dentro de RelevanteDaoImpl ejecutando la regla 37");
+		LOG.info("ValuesRule "+ valuesRule);
+		LOG.info("Monto "+ monto);
+		LOG.info("IntrumentoMonetario" + instMonetario);
+		LOG.info("cierreId" + cierreId);
+		LOG.info("monto"+ monto);
+		LOG.info("proceoId"+ procesoId);
+		
+		LOG.info("reglaid " + numRegla);
+		List<DatosVo> casos = this.jdbcTemplate.query
+				(setSchema(user.getEsquema(), qryRelevantes),
+						new Object[]{
+							cierreId,
+							instMonetario,
+							monto,
+							procesoId,
+							RELEVANTES.OPERACIONES_RELEVANTES.getNumRn()
+						
+				},CasosMapper.casosMapper);
+
+		utilsRulesDao.instValorParametrosRn(cierreId, RELEVANTES.OPERACIONES_RELEVANTES.getNumRn(), valuesRule,user);
+
+		LOG.info("Numero de casos devueltos del Mapper "+ casos.size());
+		utilsRulesDao.persisteCasos(casos, valuesRule, cierreId, REGLAS.RELEVANTE.getTipoRegla(),
+				REGLAS.RELEVANTE.getTipoAnalisis(), RELEVANTES.OPERACIONES_RELEVANTES.getNumRn(),user);
+		return casos.size();
+	}
+----
