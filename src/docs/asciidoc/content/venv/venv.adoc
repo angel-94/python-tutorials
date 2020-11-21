@@ -18,7 +18,7 @@ A venv is a virtual environmet to work with python
                 . **python3:** The version of the language
                 . **-m:** Indicates we run a library module as a script 
                 . **venv:** Name of the module
-                . **~/Documents/Workspaces/personal-workspace/hello-world/venv:** The path of your system wwhere you create the *Virtual Environment*
+                . **~/Documents/Workspaces/personal-workspace/hello-world/venv:** The path of your system wwhere you create the --Virtual Environment--
 
 - Now run the next command
         * `source ~/Documents/Workspaces/personal-workspace/hello-world/venv/bin/activate`

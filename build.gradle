@@ -102,38 +102,6 @@ asciidoctorPdf {
             'project-version': "$version"
 }
 
-
-// asciidoctor {
-//     baseDirFollowsSourceDir()
-//     sourceDir file(sourceDirectory)
-//     outputDir file(buildDirectory)
-//     logDocuments true
-
-//     asciidoctorj {
-// //        requires 'pygments'
-//         attributes 'source-highlighter' : 'rouge'
-//     }
-
-//     attributes 'build-gradle': file('build.gradle'),
-//             'endpoint-url': 'https://meltsan.us',
-//             'source-highlighter': 'rouge',
-//             'toc': 'left',
-//             'icons': 'font',
-// 			'doctype': 'book',
-//             'setanchors': '',
-//             'idprefix': '',
-//             'idseparator': '-',
-//             'docinfo1': '',
-//             'numbered': '',
-//             'allow-uri-read': true,
-//             'sourcedir': project.sourceSets.main.java.srcDirs[0],
-//             'outdir': outputDir.absolutePath,
-//             'buildDate': new SimpleDateFormat("dd-MMMM-yyyy HH:mm:ss").format(new Date()),
-//             'buildTitle': 'Aml Reglas Docs',
-//             'buildSubtitle': 'Aml Reglas Docs',
-//             'project-version': "$version"
-// }
-
 asciidoctorj {
 	version = '2.4.1'
 	fatalWarnings ".*"
