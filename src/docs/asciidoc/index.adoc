@@ -16,4 +16,5 @@ TIP: My first Python Tutorial, if you find a error or you have a suggestion to i
 
 [horizontal]
 <<python.adoc#python, What is Python?>> :: A short definitions of what is Python
-<<venv.adoc#venv, How to create a venv?>> :: You find steps to create a virtual environment
+<<venv.adoc#venv, How to create a venv?>> :: Steps to create a virtual environment
+<<pyscaffold.adoc#pyscaffold, How to setup a project?>> :: Setup a project with Pyscaffold
