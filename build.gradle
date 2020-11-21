@@ -118,9 +118,9 @@ asciidoctorj {
 			sectanchors: '',
 			sectnums: '',
 			'source-highlighter': 'highlight.js',
-			highlightjsdir: 'js/highlight',
+			highlightjsdir: 'assets/js/highlight',
 			'highlightjs-theme': 'googlecode',
-			stylesdir: 'css/',
+			stylesdir: 'assets/css/',
 			stylesheet: 'stylesheet.css',
 			'spring-version': project.version
 	])
@@ -140,7 +140,9 @@ asciidoctor {
 	logDocuments = true
 	resources {
 		from(sourceDir) {
-			include 'images/*.png', 'css/**', 'js/**'
+			include 'assets/images/*.png', 
+                    'assets/css/**', 
+                    'assets/js/**'
 		}
 	}
 }
