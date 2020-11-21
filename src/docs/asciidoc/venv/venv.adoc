@@ -25,11 +25,5 @@ A venv is a virtual environmet to work with python
                 . This command activate the current virtual environment in your terminal session
 
 
-// image::.png[Sunset]
-image::venv-final.png[1000,500,align="center"]
-// image::venv/venv-final.png[700,600,align="center"]
-
-// listado de clientes
-// +
-// image::clients/add-client.png[700,600,align="center"]
+image::venv-final.png[1200,450,align="center"]
 
