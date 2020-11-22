@@ -1,4 +1,4 @@
-ifndef::imagesdir[:imagesdir: images]
+ifndef::imagesdir[:imagesdir: assets/images]
 = Venv
 
 ==  What is a venv?
@@ -15,10 +15,16 @@ A venv is a virtual environmet to work with python
 
 - Now execute the next command:
         * `python3 -m venv ~/Documents/Workspaces/personal-workspace/hello-world/venv`
-                . **python3:** The version of the language
-                . **-m:** Indicates we run a library module as a script 
-                . **venv:** Name of the module
-                . **~/Documents/Workspaces/personal-workspace/hello-world/venv:** The path of your system wwhere you create the --Virtual Environment--
+        
+[NOTE]
+====
+**Where:**
+
+. `python3:` The version of the language
+. `-m:` Indicates we run a library module as a script 
+. `venv:` Name of the module
+. `~/Documents/Workspaces/personal-workspace/hello-world/venv:` The path of your system where you create the _Virtual Environment_
+====
 
 - Now run the next command
         * `source ~/Documents/Workspaces/personal-workspace/hello-world/venv/bin/activate`
