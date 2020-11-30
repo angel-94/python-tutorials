@@ -1,6 +1,6 @@
 = Python
 
-TIP: My first Python Tutorial, if you find an error or you have a suggestion to improve this documentation feel free to open a issue or clone this repository and send me a Pull Request with your change
+TIP: My first Python Tutorial, if you find an error or you have a suggestion to improve this documentation feel free to open an issue or clone this repository and send me a Pull Request with your changes
 
 [horizontal]
 <<python.adoc#python, Python>> :: What is Python?
