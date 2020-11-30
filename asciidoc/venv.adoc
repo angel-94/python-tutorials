@@ -1,8 +1,0 @@
-[[venv]]
-= How to create a venv?
-:toc: left
-:toclevels: 4
-:tabsize: 4
-:docinfo1:
-
-include::venv/venv.adoc[leveloffset=+1]
