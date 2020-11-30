@@ -6,3 +6,6 @@ TIP: My first Python Tutorial, if you find a error or you have a suggestion to i
 <<python.adoc#python, Python>> :: What is Python?
 <<venv.adoc#venv, venv>> :: Steps to create a virtual environment
 <<pyscaffold.adoc#pyscaffold, Setup your project>> :: Setup a project with Pyscaffold
+<<poo.adoc#poo, POO>> :: POO with python
+<<flask.adoc#flask, Flask>> :: Expose your data with an API with Flask
+<<marshmallow.adoc#marshmallow, Marshmallow>> :: Serialize and Deserialize your objects 
