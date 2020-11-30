@@ -1,16 +1,4 @@
 = Python
-// Documentación detallada de reglas
-// {buildDate}
-// :toclevels: 4
-// :toc-title: Tabla de Contenido
-// :revnumber: {project-version}
-// ifndef::imagesdir[:imagesdir: images]
-// ifndef::sourcedir[:sourcedir: ../java]
-// ifndef::queriesdir[:queriesdir: queries/]
-// ifndef::qryutilsdir[:qryutilsdir: qry-utils/]
-// ifndef::params[:params: parametros/]
-// ifdef::backend-pdf[:imagesdir: images]
-// :title-logo-image: image:logo.png[]
 
 TIP: My first Python Tutorial, if you find a error or you have a suggestion to improve this documentation feel free to open a issue or clone this repository and send me a Pull Request with your change
 
