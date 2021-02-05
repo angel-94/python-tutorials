@@ -2,4 +2,11 @@
 
 == https://pyscaffold.org/en/latest/index.html[Pyscaffold]
 
-Is a tool to seet up your projeect.
+- Is a tool to seet up your projeect.
+- PyScaffold helps you setup a new Python project. Just install it with:
+        * `pip install pyscaffold`
+
+- This will give you a new putup command and you can just type:
+        * `putup my_project`
+
+- This will create a new folder called my_project containing a perfect project template with everything you need for some serious coding. After the usual:

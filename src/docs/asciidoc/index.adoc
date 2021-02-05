@@ -1,6 +1,8 @@
 = Python
 
-TIP: My first Python Tutorial, if you find an error or you have a suggestion to improve this documentation feel free to open an issue or clone this repository and send me a Pull Request with your changes
+TIP: My first Python Tutorial, if you find an error or you have a suggestion to improve this documentation feel free 
+to open an issue or clone https://github.com/angel-94/python-tutorials[this repository] and send me a Pull Request with 
+your changes
 
 [horizontal]
 <<python.adoc#python, Python>> :: What is Python?
@@ -8,4 +10,4 @@ TIP: My first Python Tutorial, if you find an error or you have a suggestion to 
 <<pyscaffold.adoc#pyscaffold, Setup your project>> :: Setup a project with Pyscaffold
 <<poo.adoc#poo, POO>> :: POO with python
 <<flask.adoc#flask, Flask>> :: Expose your data with an API with Flask
-<<marshmallow.adoc#marshmallow, Marshmallow>> :: Serialize and Deserialize your objects 
+<<marshmallow.adoc#marshmallow, Marshmallow>> :: Serialize and Deserialize your objects
