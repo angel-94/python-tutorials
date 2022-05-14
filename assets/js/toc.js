@@ -35,7 +35,7 @@ if (toctitle != null) {
 
 var headerHtml = '<div id="header-spring">\n' +
     '<h1>\n' +
-    'Angel Ruiz'
+    'Meltsan Solutions'
     // '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0"\n' +
     // 'viewBox="0 0 245.8 45.3" style="enable-background:new 0 0 245.8 45.3;" xml:space="preserve">\n' +
     // '<g id="logos">\n' +
