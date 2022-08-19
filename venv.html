@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.10">
-<title>Python</title>
+<title>How to create a venv?</title>
 <style>
 @import 'assets/css/spring-ident.css';
 
@@ -156,81 +156,126 @@ $(globalSwitch);
 </script>
 
 </head>
-<body class="book">
+<body id="venv" class="book toc2 toc-left">
 <div id="header">
-<h1>Python</h1>
+<h1>How to create a venv?</h1>
 <div class="details">
 <span id="revnumber">version 1.0.0</span>
 </div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#venv-2">1. Venv</a>
+<ul class="sectlevel2">
+<li><a href="#what-is-a-venv">1.1. What is a venv?</a></li>
+<li><a href="#steps-to-create-a-venv">1.2. Steps to create a venv</a></li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="venv-2"><a class="anchor" href="#venv-2"></a>1. Venv</h2>
 <div class="sectionbody">
-<div class="admonitionblock tip">
+<div class="sect2">
+<h3 id="what-is-a-venv"><a class="anchor" href="#what-is-a-venv"></a>1.1. What is a venv?</h3>
+<div class="paragraph">
+<p>A venv is a virtual environmet to work with python</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="steps-to-create-a-venv"><a class="anchor" href="#steps-to-create-a-venv"></a>1.2. Steps to create a venv</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>For create a vevn and start to work with <strong>Python</strong>, open a terminal and in your personal workspace create a directory, for example, I create a directory in the folowing path.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>~/Documents/Workspaces/personal-workspace/hello-world</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Now inside this directory we need to create a sub-directory, the name of this sub-directory is of your choise, I chose this name:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>venv</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Now execute the next command:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>python3 -m venv ~/Documents/Workspaces/personal-workspace/hello-world/venv</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-My first Python Tutorial, if you find an error or you have a suggestion to improve this documentation feel free
-to open an issue or clone <a href="https://github.com/angel-94/python-tutorials">this repository</a> and send me a Pull Request with
-your changes
+<div class="paragraph">
+<p><strong>Where:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>python3:</code> The version of the language</p>
+</li>
+<li>
+<p><code>-m:</code> Indicates we run a library module as a script</p>
+</li>
+<li>
+<p><code>venv:</code> Name of the module</p>
+</li>
+<li>
+<p><code>~/Documents/Workspaces/personal-workspace/hello-world/venv:</code> The path of your system where you create the <em>Virtual Environment</em></p>
+</li>
+</ol>
+</div>
 </td>
 </tr>
 </table>
 </div>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-<a href="python.html#python">Python</a> 
-</td>
-<td class="hdlist2">
-<p>What is Python?</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-<a href="venv.html#venv">venv</a> 
-</td>
-<td class="hdlist2">
-<p>Steps to create a virtual environment</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-<a href="pyscaffold.html#pyscaffold">Setup your project</a> 
-</td>
-<td class="hdlist2">
-<p>Setup a project with Pyscaffold</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-<a href="poo.html#poo">POO</a> 
-</td>
-<td class="hdlist2">
-<p>POO with python</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-<a href="flask.html#flask">Flask</a> 
-</td>
-<td class="hdlist2">
-<p>Expose your data with an API with Flask</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-<a href="marshmallow.html#marshmallow">Marshmallow</a> 
-</td>
-<td class="hdlist2">
-<p>Serialize and Deserialize your objects</p>
-</td>
-</tr>
-</table>
+<div class="ulist">
+<ul>
+<li>
+<p>Now run the next command</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>source ~/Documents/Workspaces/personal-workspace/hello-world/venv/bin/activate</code></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>This command activate the current virtual environment in your terminal session</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="assets/images/venv-final.png" alt="1200" width="450">
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -238,7 +283,7 @@ your changes
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0<br>
-Last updated 2020-11-30 18:12:28 -0600
+Last updated 2020-11-21 15:19:04 -0600
 </div>
 </div>
 <link rel="stylesheet" href="assets/js/highlight/styles/googlecode.min.css">
