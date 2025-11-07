@@ -1,250 +1,1133 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.10">
-<title>Python</title>
-<style>
-@import 'assets/css/spring-ident.css';
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💪 Mi Plan Fitness - Glúteos & Piernas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-.listingblock .switch {
-    border-style: none;
-    display: inline-block;
-    position: relative;
-    bottom: -3px;
-}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-.listingblock .switch--item {
-    padding: 10px;
-    background-color: #e6e1dc;
-    color: #282c34;
-    display: inline-block;
-    cursor: pointer;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-}
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
 
-.listingblock .switch--item:not(:first-child) {
-    border-style: none;
-}
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 40px;
+            text-align: center;
+            color: white;
+        }
 
-.listingblock .switch--item.selected {
-    background-color: #282c34;
-    color: #e6e1dc;
-}
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
 
-.listingblock pre.highlightjs {
-    padding: 0;
-}
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
 
-</style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-.hidden {
-	display: none;
-}
+        .stat-card {
+            background: rgba(255,255,255,0.2);
+            padding: 15px 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
 
-.switch {
-	border-width: 1px 1px 0 1px;
-	border-style: solid;
-	border-color: #7a2518;
-	display: inline-block;
-}
+        .stat-card h3 {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
 
-.switch--item {
-	padding: 10px;
-	background-color: #ffffff;
-	color: #7a2518;
-	display: inline-block;
-	cursor: pointer;
-}
+        .stat-card p {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 5px;
+        }
 
-.switch--item:not(:first-child) {
-	border-width: 0 0 0 1px;
-	border-style: solid;
-	border-color: #7a2518;
-}
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            padding: 0;
+            overflow-x: auto;
+        }
 
-.switch--item.selected {
-	background-color: #7a2519;
-	color: #ffffff;
-}
-</style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
-<script type="text/javascript">
-function addBlockSwitches() {
-	$('.primary').each(function() {
-		primary = $(this);
-		createSwitchItem(primary, createBlockSwitch(primary)).item.addClass("selected");
-		primary.children('.title').remove();
-	});
-	$('.secondary').each(function(idx, node) {
-		secondary = $(node);
-		primary = findPrimary(secondary);
-		switchItem = createSwitchItem(secondary, primary.children('.switch'));
-		switchItem.content.addClass('hidden');
-		findPrimary(secondary).append(switchItem.content);
-		secondary.remove();
-	});
-}
+        .tab-button {
+            flex: 1;
+            padding: 20px;
+            border: none;
+            background: #f8f9fa;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            min-width: 150px;
+        }
 
-function createBlockSwitch(primary) {
-	blockSwitch = $('<div class="switch"></div>');
-	primary.prepend(blockSwitch);
-	return blockSwitch;
-}
+        .tab-button:hover {
+            background: #e9ecef;
+        }
 
-function findPrimary(secondary) {
-	candidate = secondary.prev();
-	while (!candidate.is('.primary')) {
-		candidate = candidate.prev();
-	}
-	return candidate;
-}
+        .tab-button.active {
+            color: #f5576c;
+            background: white;
+            border-bottom: 3px solid #f5576c;
+        }
 
-function createSwitchItem(block, blockSwitch) {
-	blockName = block.children('.title').text();
-	content = block.children('.content').first().append(block.next('.colist'));
-	item = $('<div class="switch--item">' + blockName + '</div>');
-	blockSwitch.append(item);
-	return {'item': item, 'content': content};
-}
+        .tab-content {
+            display: none;
+            padding: 40px;
+            animation: fadeIn 0.5s;
+        }
 
-function globalSwitch() {
-	$('.switch--item').each(function() {
-		var blockId = blockIdForSwitchItem($(this));
-		$(this).off('click');
-		$(this).on('click', function() {
-			selectedText = $(this).text()
-			window.localStorage.setItem(blockId, selectedText);
-			$(".switch--item").filter(function() {
-				return blockIdForSwitchItem($(this)) === blockId;
-			}).filter(function() {
-				return $(this).text() === selectedText;
-			}).each(function() {
-				select($(this))
-			});
-		});
-		if ($(this).text() === window.localStorage.getItem(blockId)) {
-			select($(this))
-		}
-	});
-}
+        .tab-content.active {
+            display: block;
+        }
 
-function blockIdForSwitchItem(item) {
-	idComponents = []
-	idComponents.push(item.text().toLowerCase());
-	item.siblings(".switch--item").each(function(index, sibling) {
-		idComponents.push($(sibling).text().toLowerCase());
-	});
-	return idComponents.sort().join("-")
-}
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-function select(selected) {
-	selected.addClass('selected');
-	selected.siblings().removeClass('selected');
-	selectedContent = selected.parent().siblings(".content").eq(selected.index())
-	selectedContent.removeClass('hidden');
-	selectedContent.siblings().addClass('hidden');
-}
+        .meal-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
 
-$(addBlockSwitches);
-$(globalSwitch);
+        .meal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
 
-</script>
+        .meal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
 
+        .meal-time {
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .meal-icon {
+            font-size: 2em;
+        }
+
+        .meal-details {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .meal-details.show {
+            display: block;
+        }
+
+        .meal-item {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 15px;
+            margin: 8px 0;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .tip-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            color: #333;
+        }
+
+        .tip-box strong {
+            color: #856404;
+        }
+
+        .shopping-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .shopping-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .shopping-item:hover {
+            background: #e9ecef;
+            transform: scale(1.02);
+        }
+
+        .shopping-item input[type="checkbox"] {
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+        }
+
+        .shopping-item.checked {
+            opacity: 0.5;
+            text-decoration: line-through;
+        }
+
+        .prep-step {
+            background: white;
+            border: 2px solid #667eea;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 15px;
+            position: relative;
+            padding-left: 70px;
+        }
+
+        .prep-step-number {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .gym-tips {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 20px 0;
+        }
+
+        .gym-tips h3 {
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .gym-tips ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .gym-tips li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .gym-tips li:before {
+            content: "💪";
+            position: absolute;
+            left: 0;
+        }
+
+        .progress-tracker {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 20px 0;
+        }
+
+        .week-days {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .day-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+        }
+
+        .day-card:hover {
+            transform: scale(1.05);
+        }
+
+        .day-card.completed {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+
+        .day-card h4 {
+            margin-bottom: 10px;
+        }
+
+        .button-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .button-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .macros-visual {
+            display: flex;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .macro-bar {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .macro-bar h4 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .bar-container {
+            background: #e9ecef;
+            border-radius: 25px;
+            height: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: width 1s ease;
+        }
+
+        .protein-bar { background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%); }
+        .carbs-bar { background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); }
+        .fats-bar { background: linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%); color: #333; }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab-button {
+                width: 100%;
+            }
+            
+            .tab-content {
+                padding: 20px;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        .float-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            color: white;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .float-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .motivacion {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .motivacion h2 {
+            color: #d63031;
+            margin-bottom: 15px;
+        }
+
+        .motivacion p {
+            font-size: 1.2em;
+            color: #2d3436;
+            line-height: 1.6;
+        }
+    </style>
 </head>
-<body class="book">
-<div id="header">
-<h1>Python</h1>
-<div class="details">
-<span id="revnumber">version 1.0.0</span>
-</div>
-</div>
-<div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-My first Python Tutorial, if you find an error or you have a suggestion to improve this documentation feel free
-to open an issue or clone <a href="https://github.com/angel-94/python-tutorials">this repository</a> and send me a Pull Request with
-your changes
-</td>
-</tr>
-</table>
-</div>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-<a href="python.html#python">Python</a> 
-</td>
-<td class="hdlist2">
-<p>What is Python?</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-<a href="venv.html#venv">venv</a> 
-</td>
-<td class="hdlist2">
-<p>Steps to create a virtual environment</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-<a href="pyscaffold.html#pyscaffold">Setup your project</a> 
-</td>
-<td class="hdlist2">
-<p>Setup a project with Pyscaffold</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-<a href="poo.html#poo">POO</a> 
-</td>
-<td class="hdlist2">
-<p>POO with python</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-<a href="flask.html#flask">Flask</a> 
-</td>
-<td class="hdlist2">
-<p>Expose your data with an API with Flask</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-<a href="marshmallow.html#marshmallow">Marshmallow</a> 
-</td>
-<td class="hdlist2">
-<p>Serialize and Deserialize your objects</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div id="footer">
-<div id="footer-text">
-Version 1.0.0<br>
-Last updated 2020-11-30 18:12:28 -0600
-</div>
-</div>
-<link rel="stylesheet" href="assets/js/highlight/styles/googlecode.min.css">
-<script src="assets/js/highlight/highlight.min.js"></script>
-<script>hljs.initHighlighting()</script>
-<script type="text/javascript" src="assets/js/tocbot/tocbot.min.js"></script>
-<script type="text/javascript" src="assets/js/toc.js"></script>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💪 Plan Fitness - Glúteos & Piernas</h1>
+            <p>Tu guía completa para entrenar y comer como campeona</p>
+            <div class="stats">
+                <div class="stat-card">
+                    <h3>Altura</h3>
+                    <p>157 cm</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Peso Actual</h3>
+                    <p>56 kg</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Meta Diaria</h3>
+                    <p>2,200 cal</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab(event, 'comidas')">🍽️ Mis Comidas</button>
+            <button class="tab-button" onclick="openTab(event, 'preparacion')">👨‍🍳 Meal Prep</button>
+            <button class="tab-button" onclick="openTab(event, 'compras')">🛒 Lista Súper</button>
+            <button class="tab-button" onclick="openTab(event, 'gym')">🏋️‍♀️ Tips Gym</button>
+            <button class="tab-button" onclick="openTab(event, 'progreso')">📊 Mi Progreso</button>
+        </div>
+
+        <div id="comidas" class="tab-content active">
+            <h2 style="color: #667eea; margin-bottom: 30px;">📅 Plan Diario de Comidas</h2>
+            
+            <div class="macros-visual">
+                <div class="macro-bar">
+                    <h4>🥩 Proteína</h4>
+                    <div class="bar-container">
+                        <div class="bar-fill protein-bar" style="width: 0%;" data-target="100">
+                            <span class="macro-text">0g / 110g</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="macro-bar">
+                    <h4>🍚 Carbohidratos</h4>
+                    <div class="bar-container">
+                        <div class="bar-fill carbs-bar" style="width: 0%;" data-target="100">
+                            <span class="macro-text">0g / 270g</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="macro-bar">
+                    <h4>🥑 Grasas</h4>
+                    <div class="bar-container">
+                        <div class="bar-fill fats-bar" style="width: 0%;" data-target="100">
+                            <span class="macro-text">0g / 65g</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="meal-card" onclick="toggleMeal(this)">
+                <div class="meal-header">
+                    <div>
+                        <div class="meal-time">6:30 AM - Desayuno 🌅</div>
+                        <small>En casa antes del turno</small>
+                    </div>
+                    <div class="meal-icon">☕</div>
+                </div>
+                <div class="meal-details">
+                    <div class="meal-item">🥣 1 taza de avena con plátano y 2 cdas de crema de cacahuate</div>
+                    <div class="meal-item">🍳 2 huevos revueltos</div>
+                    <div class="meal-item">🥤 1 vaso de jugo de naranja</div>
+                    <div class="tip-box">
+                        <strong>💡 Tip:</strong> Prepara la avena desde la noche (overnight oats) para solo calentar los huevos por la mañana.
+                    </div>
+                </div>
+            </div>
+
+            <div class="meal-card" onclick="toggleMeal(this)">
+                <div class="meal-header">
+                    <div>
+                        <div class="meal-time">10:00 AM - Snack 🏥</div>
+                        <small>En el trabajo (come rápido)</small>
+                    </div>
+                    <div class="meal-icon">🍱</div>
+                </div>
+                <div class="meal-details">
+                    <div class="meal-item">🍗 Tupper: 150g pollo + 3/4 taza arroz + aguacate</div>
+                    <div class="meal-item">🍎 1 manzana o plátano</div>
+                    <div class="tip-box">
+                        <strong>💡 Tip:</strong> Guarda en el refri del hospital. Come aunque sea parada si tienes mucho trabajo.
+                    </div>
+                </div>
+            </div>
+
+            <div class="meal-card" onclick="toggleMeal(this)">
+                <div class="meal-header">
+                    <div>
+                        <div class="meal-time">1:00 PM - Comida Principal 🍽️</div>
+                        <small>Comida más importante del día</small>
+                    </div>
+                    <div class="meal-icon">🥘</div>
+                </div>
+                <div class="meal-details">
+                    <div class="meal-item">🥩 180g de carne o pollo</div>
+                    <div class="meal-item">🍚 1.5 tazas de arroz o papa</div>
+                    <div class="meal-item">🥦 Porción generosa de verduras</div>
+                    <div class="meal-item">🥑 1/4 de aguacate</div>
+                    <div class="tip-box">
+                        <strong>💡 Tip:</strong> Calienta en el microondas del trabajo. Esta comida te dará energía para terminar tu turno.
+                    </div>
+                </div>
+            </div>
+
+            <div class="meal-card" onclick="toggleMeal(this)">
+                <div class="meal-header">
+                    <div>
+                        <div class="meal-time">4:30 PM - Pre-Entreno 💪</div>
+                        <small>Saliendo del trabajo, camino al gym</small>
+                    </div>
+                    <div class="meal-icon">🍌</div>
+                </div>
+                <div class="meal-details">
+                    <div class="meal-item">🍌 1 plátano + puño de almendras</div>
+                    <div class="meal-item">O 🥤 Licuado: leche + plátano + avena + crema de cacahuate</div>
+                    <div class="tip-box">
+                        <strong>💡 Tip:</strong> Si preparas el licuado, llévalo en termo desde la mañana. Te dará energía para tu entrenamiento.
+                    </div>
+                </div>
+            </div>
+
+            <div class="meal-card" onclick="toggleMeal(this)">
+                <div class="meal-header">
+                    <div>
+                        <div class="meal-time">7:00 PM - Post-Entreno 🏆</div>
+                        <small>¡LA MÁS IMPORTANTE! Aquí crecen tus glúteos</small>
+                    </div>
+                    <div class="meal-icon">🍗</div>
+                </div>
+                <div class="meal-details">
+                    <div class="meal-item">🍖 150-180g de proteína (pollo, carne, pescado)</div>
+                    <div class="meal-item">🍠 Porción GENEROSA de camote o arroz (1.5-2 tazas)</div>
+                    <div class="meal-item">🥗 Ensalada o verduras</div>
+                    <div class="tip-box">
+                        <strong>💡 Tip:</strong> NO te saltes esta comida. Es cuando tu cuerpo construye músculo. Come dentro de 1 hora después del gym.
+                    </div>
+                </div>
+            </div>
+
+            <div class="meal-card" onclick="toggleMeal(this)">
+                <div class="meal-header">
+                    <div>
+                        <div class="meal-time">9:30 PM - Cena Ligera 🌙</div>
+                        <small>Antes de dormir</small>
+                    </div>
+                    <div class="meal-icon">🥛</div>
+                </div>
+                <div class="meal-details">
+                    <div class="meal-item">🥛 Yogurt griego con granola y fresas</div>
+                    <div class="meal-item">O requesón con fruta</div>
+                    <div class="tip-box">
+                        <strong>💡 Tip:</strong> La proteína antes de dormir ayuda a recuperar tus músculos durante la noche.
+                    </div>
+                </div>
+            </div>
+
+            <div class="motivacion">
+                <h2>🔥 ¡Recuerda!</h2>
+                <p>La consistencia es clave. No tienes que ser perfecta todos los días, pero mientras más seguido comas bien y entrenes, más rápido verás resultados en tus glúteos y piernas. ¡Tú puedes! 💪✨</p>
+            </div>
+        </div>
+
+        <div id="preparacion" class="tab-content">
+            <h2 style="color: #667eea; margin-bottom: 30px;">👨‍🍳 Meal Prep Dominical</h2>
+            <p style="margin-bottom: 30px; font-size: 1.1em;">Dedica 2-3 horas el domingo y tendrás comida para toda la semana. ¡Vale la pena!</p>
+
+            <div class="prep-step">
+                <div class="prep-step-number">1</div>
+                <h3>Cocina las Proteínas (1 hora)</h3>
+                <ul style="margin-top: 15px; margin-left: 20px;">
+                    <li><strong>Pollo desmenuzado:</strong> Hierve 1kg de pechuga con ajo, cebolla y sal. Desmenuza cuando enfríe.</li>
+                    <li><strong>Carne molida:</strong> Sofríe 800g con cebolla, jitomate, zanahoria rallada.</li>
+                    <li><strong>Huevos cocidos:</strong> Hierve 12 huevos por 10 minutos. Guárdalos con cáscara.</li>
+                </ul>
+            </div>
+
+            <div class="prep-step">
+                <div class="prep-step-number">2</div>
+                <h3>Prepara los Carbohidratos (30 min)</h3>
+                <ul style="margin-top: 15px; margin-left: 20px;">
+                    <li><strong>Arroz:</strong> Cocina 2kg de arroz con un chorrito de aceite.</li>
+                    <li><strong>Camote:</strong> Hornea o hierve 1.5kg de camote. Corta en cubos.</li>
+                    <li><strong>Avena overnight:</strong> En 5 frascos pon: avena + leche + chía. Refrigera.</li>
+                </ul>
+            </div>
+
+            <div class="prep-step">
+                <div class="prep-step-number">3</div>
+                <h3>Cocina las Verduras (20 min)</h3>
+                <ul style="margin-top: 15px; margin-left: 20px;">
+                    <li>Cocina al vapor brócoli, calabaza, chayote</li>
+                    <li>Guarda en recipientes separados</li>
+                    <li>Pica lechuga y jitomate (guarda aparte para ensaladas)</li>
+                </ul>
+            </div>
+
+            <div class="prep-step">
+                <div class="prep-step-number">4</div>
+                <h3>Arma los Tuppers (30 min)</h3>
+                <ul style="margin-top: 15px; margin-left: 20px;">
+                    <li><strong>5 tuppers para snack de 10am:</strong> Pollo (150g) + arroz (3/4 taza) + verduras</li>
+                    <li><strong>5 tuppers para comida de 1pm:</strong> Proteína (180g) + arroz/camote (1.5 tazas) + verduras</li>
+                    <li>Etiqueta cada tupper con el día (Lun, Mar, Mié, etc.)</li>
+                </ul>
+            </div>
+
+            <div class="prep-step">
+                <div class="prep-step-number">5</div>
+                <h3>Organiza tu Refri 🧊</h3>
+                <ul style="margin-top: 15px; margin-left: 20px;">
+                    <li>Tuppers de Lun-Mié en el refri</li>
+                    <li>Tuppers de Jue-Vie en el congelador (descongela la noche anterior)</li>
+                    <li>Huevos cocidos en un recipiente</li>
+                    <li>Frutas lavadas y listas</li>
+                </ul>
+            </div>
+
+            <div class="gym-tips">
+                <h3>🎯 Recetas Express que te Salvarán</h3>
+                <ul>
+                    <li><strong>Licuado Post-Gym:</strong> 1 taza leche + 1 plátano + 2 cdas avena + 1 cda crema cacahuate. Batir y listo.</li>
+                    <li><strong>Bowl Rápido:</strong> Arroz + pollo desmenuzado + aguacate + salsa. 2 minutos en microondas.</li>
+                    <li><strong>Wrap de Emergencia:</strong> Tortilla de harina + frijoles + pollo + queso. Calentar 1 minuto.</li>
+                    <li><strong>Overnight Oats:</strong> Avena + leche + plátano + crema cacahuate. Dejar en refri toda la noche.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="compras" class="tab-content">
+            <h2 style="color: #667eea; margin-bottom: 20px;">🛒 Lista del Súper Semanal</h2>
+            <p style="margin-bottom: 30px; font-size: 1.1em;">Presupuesto aproximado: <strong>$700-900 pesos/semana</strong></p>
+
+            <h3 style="color: #f5576c; margin: 30px 0 20px 0;">🥩 Proteínas</h3>
+            <div class="shopping-list">
+                <div class="shopping-item" onclick="toggleCheck(this)">
+                    <input type="checkbox">
+                    <div>
+                        <strong>Pechuga de pollo</strong><br>
+                        <small>1 kg (~$120)</small>
+                    </div>
+                </div>
+                <div class="shopping-item" onclick="toggleCheck(this)">
+                    <input type="checkbox">
+                    <div>
+                        <strong>Carne molida</strong><br>
+                        <small>800g (~$100)</small>
+                    </div>
+                </div>
+                <div class="shopping-item" onclick="toggleCheck(this)">
+                    <input type="checkbox">
+                    <div>
+                        <strong>Huevos</strong><br>
+                        <small>1.5 docenas (~$80)</small>
+                    </div>
+                </div>
+                <div class="shopping-item" onclick="toggleCheck(this)">
+                    <input type="checkbox">
+                    <div>
+                        <strong>Yogurt griego</strong><br>
+                        <small>1kg (~$80)</small>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="color: #667eea; margin: 30px 0 20px 0;">🍚 Carbohidratos</h3>
+            <div class="shopping-list">
+                <div class="shopping-item" onclick="toggleCheck(this)">
+                    <input type="checkbox">
+                    <div>
+                        <strong>Arroz</strong><br>
+                        <small>1 kg (~$25)</small>
+                    </div>
+                </div>
+                <div class="shopping-item" onclick="toggleCheck(this)">
+                    <input type="checkbox">
+                    <div>
+                        <strong>Camote</strong><br>
+                        <small>1.5 kg (~$40)</small>
+                    </div>
+                </div>
+                <div class="shopping-item" onclick="toggleCheck(this)">
+                    <input type="checkbox">
+                    <div>
+                        <strong>Avena</strong><br>
+                        <small>1 kg (~$50)</small>
+                    </div>
+                </div>
+                <div class="shopping-item" onclick="toggleCheck(this)">
+                    <input type="checkbox">
+                    <div>
+                        <strong>Pan integral</strong><br>
+                        <small>1 paquete (~$35)</small>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="color: #4caf50; margin: 30px 0 20px 0;">🥬 Verduras y Frutas</h3>
+            <div class="shopping-list">
+                <div class="shopping-item" onclick="toggleCheck(this)">
+                    <input type="checkbox">
+                    <div>
+                        <strong>Brócoli</strong><br>
+                        <small>500g (~$20)</small>
+                    </div>
+                </div>
+                <div class="shopping-item" onclick="toggleCheck(this)">
+                    <input type="checkbox">
+                    <div>
+                        <strong>Espinacas</strong><br>
+                        <small>1 bolsa (~$25)</small>
+                    </div>
+                </div>
+                <div class="shopping-item" onclick="toggleCheck(this)">
+                    <input type="checkbox">
+                    <div>
+                        <strong>Plátanos</strong><br>
+                        <small>7 piezas (~$20)</small>
+                    </div>
+                </div>
+                <div class="shopping-item" onclick="toggleCheck(this)">
+                    <input type="checkbox">
+                    <div>
+                        <strong>Manzanas</strong><br>
+                        <small>5 piezas (~$30)</small>
+                    </div>
+                </div>
+                <div class="shopping-item" onclick="toggleCheck(this)">
+                    <input type="checkbox">
+                    <div>
+                        <strong>Aguacates</strong><br>
+                        <small>4-5 piezas (~$60)</small>
+                    </div>
+                </div>
+                <div class="shopping-item" onclick="toggleCheck(this)">
+                    <input type="checkbox">
+                    <div>
+                        <strong>Jitomate, cebolla, ajo</strong><br>
+                        <small>(~$30)</small>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="color: #ff9800; margin: 30px 0 20px 0;">🥜 Otros Esenciales</h3>
+            <div class="shopping-list">
+                <div class="shopping-item" onclick="toggleCheck(this)">
+                    <input type="checkbox">
+                    <div>
+                        <strong>Crema de cacahuate natural</strong><br>
+                        <small>1 frasco (~$60)</small>
+                    </div>
+                </div>
+                <div class="shopping-item" onclick="toggleCheck(this)">
+                    <input type="checkbox">
+                    <div>
+                        <strong>Almendras o nueces</strong><br>
+                        <small>250g (~$70)</small>
+                    </div>
+                </div>
+                <div class="shopping-item" onclick="toggleCheck(this)">
+                    <input type="checkbox">
+                    <div>
+                        <strong>Leche</strong><br>
+                        <small>2 litros (~$50)</small>
+                    </div>
+                </div>
+                <div class="shopping-item" onclick="toggleCheck(this)">
+                    <input type="checkbox">
+                    <div>
+                        <strong>Aceite de oliva</strong><br>
+                        <small>1 botella (~$80)</small>
+                    </div>
+                </div>
+                <div class="shopping-item" onclick="toggleCheck(this)">
+                    <input type="checkbox">
+                    <div>
+                        <strong>Especias</strong><br>
+                        <small>Sal, pimienta, ajo en polvo (~$30)</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tip-box" style="margin-top: 40px;">
+                <strong>💡 Tips para ahorrar:</strong><br><br>
+                🏪 Compra en el mercado local las verduras y frutas (más barato)<br>
+                🛒 Ve al súper para proteínas y productos empaquetados<br>
+                ⏰ Compra el sábado temprano para mejores precios<br>
+                ❄️ Congela lo que no uses en 3-4 días
+            </div>
+        </div>
+
+        <div id="gym" class="tab-content">
+            <h2 style="color: #667eea; margin-bottom: 30px;">🏋️‍♀️ Rutina para Glúteos y Piernas</h2>
+            
+            <div class="gym-tips">
+                <h3>🎯 Frecuencia de Entrenamiento</h3>
+                <ul>
+                    <li><strong>Lunes:</strong> Piernas y Glúteos (Enfoque pesado)</li>
+                    <li><strong>Martes:</strong> Descanso o cardio ligero</li>
+                    <li><strong>Miércoles:</strong> Piernas y Glúteos (Enfoque volumen)</li>
+                    <li><strong>Jueves:</strong> Descanso o cardio</li>
+                    <li><strong>Viernes:</strong> Piernas y Glúteos (Enfoque bomba)</li>
+                    <li><strong>Fin de semana:</strong> Descanso activo (caminar, nadar)</li>
+                </ul>
+            </div>
+
+            <div class="prep-step">
+                <div class="prep-step-number">1</div>
+                <h3>Hip Thrust (EL REY DE GLÚTEOS) 🍑</h3>
+                <p style="margin-top: 10px;"><strong>4 series x 10-12 repeticiones</strong></p>
+                <p style="margin-top: 10px;">Este es el mejor ejercicio para glúteos. Usa barra con peso. Siente el glúteo trabajar en cada repetición.</p>
+                <div class="tip-box" style="margin-top: 15px;">
+                    <strong>💡 Tip:</strong> Aprieta fuerte el glúteo en la parte de arriba del movimiento por 2 segundos.
+                </div>
+            </div>
+
+            <div class="prep-step">
+                <div class="prep-step-number">2</div>
+                <h3>Sentadilla con Peso 🏋️‍♀️</h3>
+                <p style="margin-top: 10px;"><strong>4 series x 10-15 repeticiones</strong></p>
+                <p style="margin-top: 10px;">Trabaja piernas completas y glúteos. Baja profundo (ass to grass) para activar más el glúteo.</p>
+                <div class="tip-box" style="margin-top: 15px;">
+                    <strong>💡 Tip:</strong> Empuja con los talones al subir, no con las puntas.
+                </div>
+            </div>
+
+            <div class="prep-step">
+                <div class="prep-step-number">3</div>
+                <h3>Peso Muerto Rumano 💪</h3>
+                <p style="margin-top: 10px;"><strong>4 series x 12 repeticiones</strong></p>
+                <p style="margin-top: 10px;">Excelente para glúteos y parte trasera de las piernas. Mantén la espalda recta.</p>
+            </div>
+
+            <div class="prep-step">
+                <div class="prep-step-number">4</div>
+                <h3>Zancadas (Lunges) 🚶‍♀️</h3>
+                <p style="margin-top: 10px;"><strong>3 series x 12 repeticiones por pierna</strong></p>
+                <p style="margin-top: 10px;">Con mancuernas. Da un paso grande y baja profundo.</p>
+            </div>
+
+            <div class="prep-step">
+                <div class="prep-step-number">5</div>
+                <h3>Patadas de Glúteo en Máquina 🦵</h3>
+                <p style="margin-top: 10px;"><strong>3 series x 15 repeticiones por pierna</strong></p>
+                <p style="margin-top: 10px;">Para aislar y quemar cada glúteo. Serie final con poco peso y muchas reps.</p>
+            </div>
+
+            <div class="motivacion" style="margin-top: 40px;">
+                <h2>⚡ Reglas de Oro</h2>
+                <p>
+                    ✅ Come 1-2 horas ANTES del gym<br>
+                    ✅ Come SIEMPRE después del gym (máximo 1 hora)<br>
+                    ✅ Duerme 7-8 horas (tus músculos crecen mientras duermes)<br>
+                    ✅ Toma 2-3 litros de agua al día<br>
+                    ✅ Aumenta peso progresivamente cada semana<br>
+                    ✅ La forma correcta es más importante que el peso
+                </p>
+            </div>
+
+            <div class="gym-tips" style="margin-top: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <h3>📸 Progreso Esperado</h3>
+                <ul>
+                    <li><strong>Semana 1-2:</strong> Te sentirás adolorida (es normal). Tu cuerpo se adapta.</li>
+                    <li><strong>Semana 3-4:</strong> Empiezas a sentirte más fuerte. Los glúteos se sienten más duros.</li>
+                    <li><strong>Semana 6-8:</strong> Cambios visibles. Tus glúteos se levantan y redondean.</li>
+                    <li><strong>Mes 3-4:</strong> Resultados obvios. Tu ropa te queda diferente. ¡Sigue así!</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="progreso" class="tab-content">
+            <h2 style="color: #667eea; margin-bottom: 30px;">📊 Seguimiento Semanal</h2>
+            
+            <div class="progress-tracker">
+                <h3 style="margin-bottom: 20px;">✅ Marca los días que completaste tu plan</h3>
+                <div class="week-days">
+                    <div class="day-card" onclick="toggleDay(this)">
+                        <h4>Lunes</h4>
+                        <p style="font-size: 2em; margin: 10px 0;">💪</p>
+                        <small>Click para marcar</small>
+                    </div>
+                    <div class="day-card" onclick="toggleDay(this)">
+                        <h4>Martes</h4>
+                        <p style="font-size: 2em; margin: 10px 0;">💪</p>
+                        <small>Click para marcar</small>
+                    </div>
+                    <div class="day-card" onclick="toggleDay(this)">
+                        <h4>Miércoles</h4>
+                        <p style="font-size: 2em; margin: 10px 0;">💪</p>
+                        <small>Click para marcar</small>
+                    </div>
+                    <div class="day-card" onclick="toggleDay(this)">
+                        <h4>Jueves</h4>
+                        <p style="font-size: 2em; margin: 10px 0;">💪</p>
+                        <small>Click para marcar</small>
+                    </div>
+                    <div class="day-card" onclick="toggleDay(this)">
+                        <h4>Viernes</h4>
+                        <p style="font-size: 2em; margin: 10px 0;">💪</p>
+                        <small>Click para marcar</small>
+                    </div>
+                    <div class="day-card" onclick="toggleDay(this)">
+                        <h4>Sábado</h4>
+                        <p style="font-size: 2em; margin: 10px 0;">💪</p>
+                        <small>Click para marcar</small>
+                    </div>
+                    <div class="day-card" onclick="toggleDay(this)">
+                        <h4>Domingo</h4>
+                        <p style="font-size: 2em; margin: 10px 0;">🍳</p>
+                        <small>Meal Prep</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gym-tips" style="margin-top: 30px;">
+                <h3>📝 Registro de Medidas</h3>
+                <p style="margin-bottom: 20px;">Toma estas medidas cada 2 semanas para ver tu progreso:</p>
+                <ul>
+                    <li><strong>Glúteos:</strong> Mide en la parte más ancha (_____ cm)</li>
+                    <li><strong>Muslo:</strong> Parte más gruesa (_____ cm)</li>
+                    <li><strong>Cintura:</strong> Parte más delgada (_____ cm)</li>
+                    <li><strong>Peso:</strong> Pesate en ayunas (_____ kg)</li>
+                    <li><strong>Fotos:</strong> Toma fotos de frente, lado y espalda cada 2 semanas</li>
+                </ul>
+            </div>
+
+            <div class="motivacion" style="margin-top: 30px;">
+                <h2>🎯 Metas del Mes</h2>
+                <p style="text-align: left; margin-top: 20px;">
+                    📅 <strong>Semana 1:</strong> Adaptación - Cumplir con todas las comidas<br><br>
+                    📅 <strong>Semana 2:</strong> Consistencia - Ir al gym 3 veces mínimo<br><br>
+                    📅 <strong>Semana 3:</strong> Progreso - Aumentar pesos en el gym<br><br>
+                    📅 <strong>Semana 4:</strong> Resultados - Tomar medidas y fotos
+                </p>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <button class="button-primary" onclick="resetProgress()">🔄 Reiniciar Semana</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="float-btn" onclick="scrollToTop()" title="Volver arriba">⬆️</div>
+
+    <script>
+        // Función para cambiar tabs
+        function openTab(evt, tabName) {
+            var i, tabcontent, tabbuttons;
+            
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            
+            tabbuttons = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tabbuttons.length; i++) {
+                tabbuttons[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+            
+            // Scroll to top cuando cambias de tab
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // Toggle meal details
+        function toggleMeal(element) {
+            const details = element.querySelector('.meal-details');
+            details.classList.toggle('show');
+        }
+
+        // Toggle shopping list items
+        function toggleCheck(element) {
+            const checkbox = element.querySelector('input[type="checkbox"]');
+            checkbox.checked = !checkbox.checked;
+            element.classList.toggle('checked');
+            
+            // Save to localStorage
+            saveShoppingList();
+        }
+
+        // Save shopping list state
+        function saveShoppingList() {
+            const items = document.querySelectorAll('.shopping-item');
+            const states = [];
+            items.forEach((item, index) => {
+                states.push(item.classList.contains('checked'));
+            });
+            localStorage.setItem('shoppingList', JSON.stringify(states));
+        }
+
+        // Load shopping list state
+        function loadShoppingList() {
+            const saved = localStorage.getItem('shoppingList');
+            if (saved) {
+                const states = JSON.parse(saved);
+                const items = document.querySelectorAll('.shopping-item');
+                items.forEach((item, index) => {
+                    if (states[index]) {
+                        item.classList.add('checked');
+                        item.querySelector('input[type="checkbox"]').checked = true;
+                    }
+                });
+            }
+        }
+
+        // Toggle day completion
+        function toggleDay(element) {
+            element.classList.toggle('completed');
+            saveDayProgress();
+        }
+
+        // Save day progress
+        function saveDayProgress() {
+            const days = document.querySelectorAll('.day-card');
+            const states = [];
+            days.forEach((day) => {
+                states.push(day.classList.contains('completed'));
+            });
+            localStorage.setItem('weekProgress', JSON.stringify(states));
+        }
+
+        // Load day progress
+        function loadDayProgress() {
+            const saved = localStorage.getItem('weekProgress');
+            if (saved) {
+                const states = JSON.parse(saved);
+                const days = document.querySelectorAll('.day-card');
+                days.forEach((day, index) => {
+                    if (states[index]) {
+                        day.classList.add('completed');
+                    }
+                });
+            }
+        }
+
+        // Reset progress
+        function resetProgress() {
+            if (confirm('¿Segura que quieres reiniciar el progreso de la semana?')) {
+                const days = document.querySelectorAll('.day-card');
+                days.forEach((day) => {
+                    day.classList.remove('completed');
+                });
+                localStorage.removeItem('weekProgress');
+                alert('✅ Progreso reiniciado. ¡Comienza una nueva semana!');
+            }
+        }
+
+        // Scroll to top
+        function scrollToTop() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // Animate macro bars on page load
+        function animateMacroBars() {
+            const bars = document.querySelectorAll('.bar-fill');
+            bars.forEach(bar => {
+                const target = bar.getAttribute('data-target');
+                setTimeout(() => {
+                    bar.style.width = target + '%';
+                }, 100);
+            });
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            loadShoppingList();
+            loadDayProgress();
+            animateMacroBars();
+            
+            // Show float button only when scrolled
+            window.addEventListener('scroll', function() {
+                const floatBtn = document.querySelector('.float-btn');
+                if (window.pageYOffset > 300) {
+                    floatBtn.style.display = 'flex';
+                } else {
+                    floatBtn.style.display = 'none';
+                }
+            });
+        };
+
+        // Prevent checkbox from triggering twice
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkboxes = document.querySelectorAll('.shopping-item input[type="checkbox"]');
+            checkboxes.forEach(cb => {
+                cb.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            });
+        });
+    </script>
 </body>
 </html>
